@@ -1,4 +1,14 @@
 # ---------------------------------------------------------------------------------
+# Environment
+# ---------------------------------------------------------------------------------
+
+# - Editor
+if (Get-Command zed -ErrorAction SilentlyContinue) {
+    $env:EDITOR = "zed --wait"
+    $env:VISUAL = $env:EDITOR
+}
+
+# ---------------------------------------------------------------------------------
 # PSReadLine
 # ---------------------------------------------------------------------------------
 
@@ -31,9 +41,14 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 # - PSFzf
 Import-Module PSFzf
 
+# - PSFzf
+Import-Module PSFzf
+
 Set-PsFzfOption `
-    -PSReadlineChordProvider 'Ctrl+t' `
-    -PSReadlineChordReverseHistory 'Ctrl+r'
+    -PSReadlineChordReverseHistory 'Ctrl+r' `
+    -EnableAliasFuzzyEdit `
+    -EnableAliasFuzzyGitStatus `
+    -EnableAliasFuzzyKillProcess
 
 # - posh-git
 Import-Module posh-git
