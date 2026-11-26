@@ -1,0 +1,107 @@
+[user]
+	name = Andre Kurniawan
+	email = drekunia@gmail.com
+[core]
+	autocrlf = true
+    excludesfile = C:\\Users\\drekunia\\gitignore_global.txt
+    whitespace = -trailing-space
+[init]
+    defaultBranch = main
+[status]
+    # Display submodule rev change summaries in status
+    submoduleSummary = true
+    # Recursively traverse untracked directories to display all contents
+    showUntrackedFiles = all
+# [commit]
+#     gpgsign = true
+[tag]
+    # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+    sort = version:refname
+    # gpgsign = true
+[pull]
+    # This is GREAT… when you know what you're doing and are careful
+    # not to pull --no-rebase over a local line containing a true merge.
+    # rebase = true
+    # This option, which does away with the one gotcha of
+    # auto-rebasing on pulls, is only available from 1.8.5 onwards.
+    # rebase = preserve
+    # WARNING! This option, which is the latest variation, is only
+    # available from 2.18 onwards.
+    rebase = merges
+[fetch]
+    # Auto-fetch submodule changes (sadly, won't auto-update)
+    recurseSubmodules = on-demand
+	prune = true
+[merge]
+    ff = false
+[push]
+    # Default push should only push the current branch to its push target, regardless of its remote name
+    default = upstream
+    # When pushing, also push tags whose commit-ishs are now reachable upstream
+    followTags = true
+# [rebase]
+    # Rebase advanced usage.
+    # Automagically reorder and prefix your commands while doing an interactive
+    # rebase. This has to be used with `--fixup` and/or `--squash` options for
+    # `git commit`.
+    # autoSquash = true
+    # Automatically stash current WD and stage when running rebase
+    # then you won't have to manually `git stash push` and `git stash pop`
+    # after and before your rebase.
+    # autoStash = true
+[diff]
+    # Use better, descriptive initials (c, i, w) instead of a/b.
+    mnemonicPrefix = true
+    # Show renames/moves as such
+    renames = true
+    # When using --word-diff, assume --word-diff-regex=.
+    wordRegex = .
+    # Display submodule-related information (commit listings)
+    submodule = log
+    # Use VSCode as default diff tool when running `git diff-tool`
+    # tool = vscode
+[log]
+    # Use abbrev SHAs whenever possible/relevant instead of full 40 chars
+    abbrevCommit = true
+    # Automatically --follow when given a single path
+    follow = true
+    # Disable decorate for reflog
+    # (because there is no dedicated `reflog` section available)
+    decorate = false
+[versionsort]
+    prereleaseSuffix = -pre
+    prereleaseSuffix = .pre
+    prereleaseSuffix = -beta
+    prereleaseSuffix = .beta
+    prereleaseSuffix = -rc
+    prereleaseSuffix = .rc
+[color]
+    # Enable colors in color-supporting terminals
+    ui = auto
+[color "branch"]
+    # Blue on black is hard to read in git branch -vv: use cyan instead
+    upstream = cyan
+[grep]
+    break = true
+    heading = true
+    lineNumber = true
+    # Consider most regexes to be ERE
+    extendedRegexp = true
+[difftool "sourcetree"]
+    cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $REMOTE
+[mergetool "sourcetree"]
+    cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $BASE $REMOTE --auto-merge --output=$MERGED
+    trustExitCode = false
+    keepBackup = false
+[credential]
+	helper = 
+	helper = manager
+[credential "https://dev.azure.com"]
+	usehttppath = true
+[credential "https://codeberg.org"]
+	provider = generic
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
