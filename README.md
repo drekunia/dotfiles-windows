@@ -20,190 +20,100 @@ Restart PowerShell as a regular user and configure the execution policy:
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Configure chezmoi
-
-Create the chezmoi configuration directory:
-
-```powershell
-New-Item -ItemType Directory -Path "$HOME\.config\chezmoi" -Force
-notepad "$HOME\.config\chezmoi\chezmoi.toml"
-```
-
-Add the following configuration, replacing `<username>` with your Windows username:
-
-```toml
-sourceDir = "C:/Users/<username>/.dotfiles-windows"
-```
-
 ### Initialize dotfiles
 
 ```powershell
-chezmoi init https://github.com/drekunia/.dotfiles-windows.git
+chezmoi init https://github.com/drekunia/dotfiles-windows.git
 
-cd "$HOME\.dotfiles-windows"
+cd (chezmoi git -- rev-parse --show-toplevel)
 ```
 
-### Install PowerShell modules and configure Windows
+### Install PowerShell modules
 
 ```powershell
-.\scripts\windows-settings.ps1
 .\scripts\install-modules.ps1
 ```
 
 ### Apply configuration
 
-Preview the changes before applying them:
-
 ```powershell
 chezmoi diff
-chezmoi apply --dry-run --verbose
 chezmoi apply
 ```
 
-Restart the terminal.
-
-### Fonts
-
-Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads) if required by the Windows Terminal configuration.
+Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads) if required by the Windows Terminal configuration, then restart the terminal.
 
 Review machine-specific paths and terminal profiles after restoring the configuration.
 
 ## Packages
 
-The package manifests are snapshots of installed applications, rather than curated installation lists. They may contain overlapping applications and should be reviewed before restoration.
+The package manifests are snapshots of installed applications, rather than curated installation lists. Review them for overlapping applications before restoring or updating packages.
 
 Run the following commands from the repository root:
 
 ```powershell
-cd "$HOME\.dotfiles-windows"
+cd (chezmoi git -- rev-parse --show-toplevel)
 ```
 
-### Restore Chocolatey packages
+| Action                      | Command                                                                  |
+| --------------------------- | ------------------------------------------------------------------------ |
+| Restore Chocolatey packages | `choco install .\windows\choco.config -y`                                |
+| Restore WinGet packages     | `winget import --import-file .\windows\winget.json --ignore-unavailable` |
+| Export Chocolatey packages  | `choco export .\windows\choco.config`                                    |
+| Export WinGet packages      | `winget export --output .\windows\winget.json`                           |
+| Update Chocolatey packages  | `choco upgrade all -y`                                                   |
+| Update WinGet packages      | `winget upgrade --all`                                                   |
+| Update PowerShell modules   | `Update-Module PSReadLine`                                               |
 
-Run from an elevated PowerShell session:
-
-```powershell
-choco install .\windows\choco.config -y
-```
-
-### Restore WinGet packages
-
-```powershell
-winget import --import-file .\windows\winget.json --ignore-unavailable
-```
-
-### Export package lists
-
-```powershell
-choco export .\windows\choco.config
-winget export --output .\windows\winget.json
-```
-
-### Update packages
-
-Chocolatey (elevated PowerShell):
-
-```powershell
-choco upgrade all -y
-```
-
-WinGet:
-
-```powershell
-winget upgrade --all
-```
-
-Review available upgrades and package overlap before updating applications through both package managers.
-
-### Update PowerShell modules
-
-```powershell
-Update-Module PSReadLine
-```
+Run Chocolatey restoration and upgrade commands from an elevated PowerShell session.
 
 ## Usage
 
-### Add a configuration
+| Command                             | Description                                                    |
+| ----------------------------------- | -------------------------------------------------------------- |
+| `chezmoi add <path>`                | Track a configuration file                                     |
+| `chezmoi edit <path>`               | Edit a managed source file                                     |
+| `chezmoi re-add`                    | Capture all local changes                                      |
+| `chezmoi re-add <path>`             | Capture changes to a specific file                             |
+| `chezmoi forget <path>`             | Stop managing a file without deleting the actual configuration |
+| `chezmoi managed`                   | List managed paths                                             |
+| `chezmoi managed --include=files`   | List managed files                                             |
+| `chezmoi status`                    | Check configuration status                                     |
+| `chezmoi diff`                      | Preview configuration changes                                  |
+| `chezmoi apply --dry-run --verbose` | Simulate applying changes                                      |
+| `chezmoi apply`                     | Apply configuration changes                                    |
+| `chezmoi update`                    | Pull and apply remote changes                                  |
+| `chezmoi source-path`               | Show the source state directory                                |
+| `chezmoi cd`                        | Open a shell in the source directory                           |
 
-```powershell
-chezmoi add <path>
-```
-
-For example:
-
-```powershell
-chezmoi add "$PROFILE"
-chezmoi add "$HOME\.gitconfig"
-```
-
-### Edit a configuration
-
-Edit the chezmoi source file:
-
-```powershell
-chezmoi edit "$PROFILE"
-```
-
-Preview and apply the changes:
-
-```powershell
-chezmoi diff
-chezmoi apply
-```
-
-### Capture local changes
-
-Capture changes made directly to managed configuration files:
-
-```powershell
-chezmoi re-add
-```
-
-Or capture an individual file:
-
-```powershell
-chezmoi re-add "$HOME\.gitconfig"
-```
-
-### Inspect configuration
-
-```powershell
-chezmoi managed
-chezmoi managed --include=files
-chezmoi status
-chezmoi diff
-```
-
-### Stop managing a configuration
-
-```powershell
-chezmoi forget <path>
-```
-
-This removes the file from chezmoi's source state without deleting the actual configuration file.
+After editing a managed source file, use `chezmoi diff` and `chezmoi apply` to preview and apply the changes.
 
 ## Synchronization
 
 ### Local configuration to GitHub
 
-Capture local changes, review them, and commit:
+Capture local changes:
 
 ```powershell
 chezmoi re-add
 
-cd "$HOME\.dotfiles-windows"
-
-git add .
-git diff --cached
-git commit -m "Update dotfiles"
-git push
+cd (chezmoi git -- rev-parse --show-toplevel)
 ```
 
-Package manifests can also be refreshed before committing:
+Refresh package manifests if necessary:
 
 ```powershell
 choco export .\windows\choco.config
 winget export --output .\windows\winget.json
+```
+
+Review, commit, and push:
+
+```powershell
+git add .
+git diff --cached
+git commit -m "Update dotfiles"
+git push
 ```
 
 ### GitHub to local configuration
@@ -217,7 +127,7 @@ chezmoi update
 Alternatively, preview changes before applying them:
 
 ```powershell
-cd "$HOME\.dotfiles-windows"
+cd (chezmoi git -- rev-parse --show-toplevel)
 
 git pull
 chezmoi diff

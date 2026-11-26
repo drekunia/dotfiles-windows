@@ -10,3 +10,6 @@ Desktop.ini
 # Local secrets
 .env
 .env.*
+
+# Chocolatey export backups
+/windows/choco.config.backup
