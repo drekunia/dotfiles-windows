@@ -50,14 +50,13 @@ Set-PsFzfOption `
     -EnableAliasFuzzyGitStatus `
     -EnableAliasFuzzyKillProcess
 
-# - posh-git
-Import-Module posh-git
-
-# - Terminal-Icons
-Import-Module Terminal-Icons
-
 # - zoxide
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     $env:_ZO_RESOLVE_SYMLINKS = "1"
     Invoke-Expression (zoxide init powershell --cmd cd | Out-String)
+}
+
+# - Starship
+if (Get-Command starship -ErrorAction SilentlyContinue) {
+    Invoke-Expression (&starship init powershell)
 }
