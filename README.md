@@ -31,7 +31,7 @@ cd (chezmoi git -- rev-parse --show-toplevel)
 ### Install PowerShell modules
 
 ```powershell
-.\scripts\install-modules.ps1
+Install-Module PSReadLine -Repository PSGallery -Scope CurrentUser -Force
 ```
 
 ### Apply configuration
