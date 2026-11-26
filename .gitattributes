@@ -1,0 +1,7 @@
+# Preserve LF line endings for these configurations
+home/dot_bash_profile text eol=lf
+home/dot_bashrc text eol=lf
+home/dot_gitconfig text eol=lf
+home/dot_inputrc text eol=lf
+home/_vimrc text eol=lf
+home/AppData/**/settings.json text eol=lf
