@@ -11,7 +11,7 @@ For my Linux/WSL configuration, see [`.dotfiles`](https://github.com/drekunia/.d
 Run from an elevated PowerShell session:
 
 ```powershell
-choco install git chezmoi zoxide -y
+choco install git chezmoi zoxide fzf -y
 ```
 
 Restart PowerShell as a regular user and configure the execution policy:
@@ -31,7 +31,7 @@ cd (chezmoi git -- rev-parse --show-toplevel)
 ### Install PowerShell modules
 
 ```powershell
-Install-Module PSReadLine -Repository PSGallery -Scope CurrentUser -Force
+.\scripts\install-modules.ps1
 ```
 
 ### Apply configuration
@@ -63,7 +63,7 @@ cd (chezmoi git -- rev-parse --show-toplevel)
 | Export WinGet packages      | `winget export --output .\windows\winget.json`                           |
 | Update Chocolatey packages  | `choco upgrade all -y`                                                   |
 | Update WinGet packages      | `winget upgrade --all`                                                   |
-| Update PowerShell modules   | `Update-Module PSReadLine`                                               |
+| Update PowerShell modules   | `Update-Module PSReadLine, PSFzf, posh-git, Terminal-Icons`              |
 
 Run Chocolatey restoration and upgrade commands from an elevated PowerShell session.
 
