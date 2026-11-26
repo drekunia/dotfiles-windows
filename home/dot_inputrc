@@ -1,0 +1,25 @@
+$include /etc/inputrc
+
+# ---------------------------------------------------------------------------------
+# GNU Readline
+# ---------------------------------------------------------------------------------
+
+# - General
+set bell-style none
+
+# - History search
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\eOA": history-search-backward
+"\eOB": history-search-forward
+
+# - Completion
+set colored-stats on
+set colored-completion-prefix on
+set show-all-if-ambiguous on
+set menu-complete-display-prefix on
+set skip-completed-text on
+
+"\t": menu-complete
+"\e[Z": menu-complete-backward
+

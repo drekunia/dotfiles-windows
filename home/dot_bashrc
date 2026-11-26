@@ -1,0 +1,24 @@
+# ---------------------------------------------------------------------------------
+# Bash
+# ---------------------------------------------------------------------------------
+
+# - History
+HISTSIZE=10000
+HISTFILESIZE=10000
+HISTCONTROL=ignoredups:erasedups
+
+shopt -s histappend
+
+# Save history after every command
+PROMPT_COMMAND="history -a${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+
+# ---------------------------------------------------------------------------------
+# Shell Tools
+# ---------------------------------------------------------------------------------
+
+# - zoxide
+if command -v zoxide >/dev/null 2>&1; then
+    export _ZO_RESOLVE_SYMLINKS=1
+    eval "$(zoxide init bash --cmd cd)"
+fi
+
