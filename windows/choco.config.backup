@@ -19,4 +19,5 @@
   <package id="python315" />
   <package id="vcredist140" />
   <package id="vcredist2015" />
+  <package id="zoxide" />
 </packages>

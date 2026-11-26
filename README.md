@@ -11,7 +11,7 @@ For my Linux/WSL configuration, see [`.dotfiles`](https://github.com/drekunia/.d
 Run from an elevated PowerShell session:
 
 ```powershell
-choco install git chezmoi -y
+choco install git chezmoi zoxide -y
 ```
 
 Restart PowerShell as a regular user and configure the execution policy:
