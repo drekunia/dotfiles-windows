@@ -3,7 +3,7 @@
 	email = drekunia@gmail.com
 [core]
 	autocrlf = true
-    excludesfile = C:\\Users\\drekunia\\gitignore_global.txt
+	excludesfile = ~/gitignore_global.txt
     whitespace = -trailing-space
 [init]
     defaultBranch = main

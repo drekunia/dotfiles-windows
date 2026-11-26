@@ -1,4 +1,3 @@
-
 # ---------------------------------------------------------------------------------
 # PSReadLine
 # ---------------------------------------------------------------------------------
@@ -29,3 +28,21 @@ Set-PSReadLineKeyHandler -Key Ctrl+r -Function ReverseSearchHistory
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 # ---------------------------------------------------------------------------------
+# Directory Navigation
+# ---------------------------------------------------------------------------------
+
+function ..     { Set-Location .. }
+function ...    { Set-Location ../.. }
+function ....   { Set-Location ../../.. }
+function .....  { Set-Location ../../../.. }
+
+# ---------------------------------------------------------------------------------
+
+# - zoxide
+if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+    $env:_ZO_RESOLVE_SYMLINKS = "1"
+
+    Invoke-Expression (& {
+        zoxide init powershell --cmd cd | Out-String
+    })
+}
