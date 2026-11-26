@@ -53,6 +53,6 @@ To refresh package manifests:
 ```powershell
 cd (chezmoi git -- rev-parse --show-toplevel)
 
-choco export .\windows\choco.config
-winget export --output .\windows\winget.json
+choco export .\packages\choco.config
+winget export --output .\packages\winget.json
 ```

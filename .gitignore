@@ -12,4 +12,4 @@ Desktop.ini
 .env.*
 
 # Chocolatey export backups
-/windows/choco.config.backup
+/packages/choco.config.backup
