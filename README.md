@@ -1,4 +1,4 @@
-# My Windows Dotfiles
+# My Windows dotfiles
 
 My personal Windows configuration files, managed with [chezmoi](https://www.chezmoi.io/).
 
