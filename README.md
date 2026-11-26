@@ -6,7 +6,9 @@ For my Linux/WSL configuration, see [`.dotfiles`](https://github.com/drekunia/.d
 
 ## Setup
 
-Install Git and chezmoi from an elevated PowerShell session:
+### Install dependencies
+
+Run from an elevated PowerShell session:
 
 ```powershell
 choco install git chezmoi -y
@@ -18,26 +20,39 @@ Restart PowerShell as a regular user and configure the execution policy:
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-Initialize the dotfiles repository:
+### Configure chezmoi
+
+Create the chezmoi configuration directory:
 
 ```powershell
-chezmoi init --source "$HOME\.dotfiles-windows" https://github.com/drekunia/.dotfiles-windows.git
+New-Item -ItemType Directory -Path "$HOME\.config\chezmoi" -Force
+notepad "$HOME\.config\chezmoi\chezmoi.toml"
 ```
 
-Navigate to the repository:
+Add the following configuration, replacing `<username>` with your Windows username:
+
+```toml
+sourceDir = "C:/Users/<username>/.dotfiles-windows"
+```
+
+### Initialize dotfiles
 
 ```powershell
+chezmoi init https://github.com/drekunia/.dotfiles-windows.git
+
 cd "$HOME\.dotfiles-windows"
 ```
 
-Install PowerShell modules and apply Windows preferences:
+### Install PowerShell modules and configure Windows
 
 ```powershell
-.\scripts\install-modules.ps1
 .\scripts\windows-settings.ps1
+.\scripts\install-modules.ps1
 ```
 
-Preview and apply the configuration:
+### Apply configuration
+
+Preview the changes before applying them:
 
 ```powershell
 chezmoi diff
@@ -47,9 +62,21 @@ chezmoi apply
 
 Restart the terminal.
 
+### Fonts
+
+Install [JetBrainsMono Nerd Font](https://www.nerdfonts.com/font-downloads) if required by the Windows Terminal configuration.
+
+Review machine-specific paths and terminal profiles after restoring the configuration.
+
 ## Packages
 
-The repository contains snapshots of installed Windows applications. These lists may contain overlapping packages and should be reviewed before restoration.
+The package manifests are snapshots of installed applications, rather than curated installation lists. They may contain overlapping applications and should be reviewed before restoration.
+
+Run the following commands from the repository root:
+
+```powershell
+cd "$HOME\.dotfiles-windows"
+```
 
 ### Restore Chocolatey packages
 
@@ -72,39 +99,114 @@ choco export .\windows\choco.config
 winget export --output .\windows\winget.json
 ```
 
+### Update packages
+
+Chocolatey (elevated PowerShell):
+
+```powershell
+choco upgrade all -y
+```
+
+WinGet:
+
+```powershell
+winget upgrade --all
+```
+
+Review available upgrades and package overlap before updating applications through both package managers.
+
+### Update PowerShell modules
+
+```powershell
+Update-Module PSReadLine
+```
+
 ## Usage
 
-Add a configuration file:
+### Add a configuration
 
 ```powershell
 chezmoi add <path>
 ```
 
-Capture changes to managed files:
+For example:
+
+```powershell
+chezmoi add "$PROFILE"
+chezmoi add "$HOME\.gitconfig"
+```
+
+### Edit a configuration
+
+Edit the chezmoi source file:
+
+```powershell
+chezmoi edit "$PROFILE"
+```
+
+Preview and apply the changes:
+
+```powershell
+chezmoi diff
+chezmoi apply
+```
+
+### Capture local changes
+
+Capture changes made directly to managed configuration files:
 
 ```powershell
 chezmoi re-add
 ```
 
-Edit a managed configuration:
+Or capture an individual file:
 
 ```powershell
-chezmoi edit <path>
+chezmoi re-add "$HOME\.gitconfig"
 ```
 
-Inspect managed configurations and pending changes:
+### Inspect configuration
 
 ```powershell
 chezmoi managed
+chezmoi managed --include=files
 chezmoi status
 chezmoi diff
 ```
 
-Apply configurations:
+### Stop managing a configuration
 
 ```powershell
-chezmoi apply
+chezmoi forget <path>
 ```
+
+This removes the file from chezmoi's source state without deleting the actual configuration file.
+
+## Synchronization
+
+### Local configuration to GitHub
+
+Capture local changes, review them, and commit:
+
+```powershell
+chezmoi re-add
+
+cd "$HOME\.dotfiles-windows"
+
+git add .
+git diff --cached
+git commit -m "Update dotfiles"
+git push
+```
+
+Package manifests can also be refreshed before committing:
+
+```powershell
+choco export .\windows\choco.config
+winget export --output .\windows\winget.json
+```
+
+### GitHub to local configuration
 
 Pull and apply remote changes:
 
@@ -112,12 +214,14 @@ Pull and apply remote changes:
 chezmoi update
 ```
 
-Commit configuration changes:
+Alternatively, preview changes before applying them:
 
 ```powershell
 cd "$HOME\.dotfiles-windows"
 
-git add .
-git commit -m "Update dotfiles"
-git push
+git pull
+chezmoi diff
+chezmoi apply
 ```
+
+Capture or otherwise preserve any local configuration changes before applying remote changes.
