@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2026-11-27T02:08:29.778-00:00",
+	"CreationDate" : "2026-11-27T05:15:17.558-00:00",
 	"Sources" : 
 	[
 		{
@@ -46,6 +46,9 @@
 					"PackageIdentifier" : "Microsoft.VCRedist.2010.x64"
 				},
 				{
+					"PackageIdentifier" : "Starship.Starship"
+				},
+				{
 					"PackageIdentifier" : "Anki.Anki"
 				},
 				{
@@ -79,10 +82,10 @@
 					"PackageIdentifier" : "Nvidia.PhysX"
 				},
 				{
-					"PackageIdentifier" : "calibre.calibre"
+					"PackageIdentifier" : "GitHub.cli"
 				},
 				{
-					"PackageIdentifier" : "GitHub.cli"
+					"PackageIdentifier" : "calibre.calibre"
 				},
 				{
 					"PackageIdentifier" : "Klocman.BulkCrapUninstaller"
