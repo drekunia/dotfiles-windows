@@ -43,15 +43,19 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 # ---------------------------------------------------------------------------------
 
 # - PSFzf
-$env:FZF_DEFAULT_OPTS = '--height=60% --reverse --color=bg+:#1a1b26,gutter:#32344a,pointer:#f7768e,info:#9ece6a,hl:#7aa2f7,hl+:#7dcfff'
+if ((Get-Command fzf -ErrorAction SilentlyContinue) -and
+    (Get-Module -ListAvailable -Name PSFzf)) {
 
-Import-Module PSFzf
+    $env:FZF_DEFAULT_OPTS = '--height=60% --reverse --color=bg+:#1a1b26,gutter:#32344a,pointer:#f7768e,info:#9ece6a,hl:#7aa2f7,hl+:#7dcfff'
 
-Set-PsFzfOption `
-    -PSReadlineChordReverseHistory 'Ctrl+r' `
-    -EnableAliasFuzzyEdit `
-    -EnableAliasFuzzyGitStatus `
-    -EnableAliasFuzzyKillProcess
+    Import-Module PSFzf
+
+    Set-PsFzfOption `
+        -PSReadlineChordReverseHistory 'Ctrl+r' `
+        -EnableAliasFuzzyEdit `
+        -EnableAliasFuzzyGitStatus `
+        -EnableAliasFuzzyKillProcess
+}
 
 # - zoxide
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
