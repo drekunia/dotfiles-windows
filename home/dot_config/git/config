@@ -1,68 +1,72 @@
-[user]
-	name = Andre Kurniawan
-	email = drekunia@gmail.com
-	signingkey = ~/.ssh/id_ed25519.pub
+[alias]
+	aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
+	contributors = shortlog --summary --numbered
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S\"$1\"; }; f"
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=\"$1\"; }; f"
+	l = log --oneline --graph --decorate
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	merged = branch --merged
+	oops = commit --amend --no-edit
+	push-with-lease = push --force-with-lease
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	rebase-with-hooks = rebase -x 'git reset --soft HEAD~1 && git commit -C HEAD@{1}'
+	review-local = "!git lg @{push}.."
+	reword = commit --amend
+	uncommit = reset --soft HEAD~1
+	untrack = rm --cached --
+[color "branch"]
+	upstream = cyan
+[commit]
+	gpgsign = true
 [core]
 	editor = vim
 	excludesfile = C:\\Users\\drekunia\\.config\\git\\ignore
 	pager = LESS=FR less
+[diff]
+	mnemonicPrefix = true
+	submodule = log
+[difftool "sourcetree"]
+	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $REMOTE
+[fetch]
+	prune = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = C:/Windows/System32/OpenSSH/ssh-keygen.exe
+[grep]
+	break = true
+	heading = true
+	lineNumber = true
+	patternType = extended
 [init]
 	defaultBranch = main
-[status]
-    # Display submodule rev change summaries in status
-    submoduleSummary = true
-    # Recursively traverse untracked directories to display all contents
-    showUntrackedFiles = all
-# [commit]
-#     gpgsign = true
-[tag]
-    # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
-    sort = version:refname
-	gpgSign = true
-    # gpgsign = true
-[pull]
-    # This is GREAT… when you know what you're doing and are careful
-    # not to pull --no-rebase over a local line containing a true merge.
-    # rebase = true
-    # This option, which does away with the one gotcha of
-    # auto-rebasing on pulls, is only available from 1.8.5 onwards.
-    # rebase = preserve
-    # WARNING! This option, which is the latest variation, is only
-    # available from 2.18 onwards.
-    rebase = merges
-[fetch]
-    # Auto-fetch submodule changes (sadly, won't auto-update)
-	prune = true
-[push]
-    # Default push should only push the current branch to its push target, regardless of its remote name
-    # When pushing, also push tags whose commit-ishs are now reachable upstream
-    followTags = true
-	autoSetupRemote = true
-# [rebase]
-    # Rebase advanced usage.
-    # Automagically reorder and prefix your commands while doing an interactive
-    # rebase. This has to be used with `--fixup` and/or `--squash` options for
-    # `git commit`.
-    # autoSquash = true
-    # Automatically stash current WD and stage when running rebase
-    # then you won't have to manually `git stash push` and `git stash pop`
-    # after and before your rebase.
-    # autoStash = true
-[diff]
-    # Use better, descriptive initials (c, i, w) instead of a/b.
-    mnemonicPrefix = true
-    # Show renames/moves as such
-    # When using --word-diff, assume --word-diff-regex=.
-    # Display submodule-related information (commit listings)
-    submodule = log
-    # Use VSCode as default diff tool when running `git diff-tool`
-    # tool = vscode
 [log]
-    # Use abbrev SHAs whenever possible/relevant instead of full 40 chars
-    abbrevCommit = true
-    # Automatically --follow when given a single path
-    # Disable decorate for reflog
-    # (because there is no dedicated `reflog` section available)
+	abbrevCommit = true
+[merge]
+	conflictStyle = zdiff3
+[mergetool "sourcetree"]
+	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $BASE $REMOTE --auto-merge --output=$MERGED
+	keepBackup = false
+	trustExitCode = false
+[pager]
+	config = false
+[pull]
+	rebase = merges
+[push]
+	autoSetupRemote = true
+	followTags = true
+[rerere]
+	enabled = true
+[status]
+	showUntrackedFiles = all
+	submoduleSummary = true
+[tag]
+	gpgsign = true
+	sort = version:refname
+[user]
+	email = drekunia@gmail.com
+	name = Andre Kurniawan
+	signingkey = ~/.ssh/id_ed25519.pub
 [versionsort]
 	suffix = -pre
 	suffix = .pre
@@ -70,51 +74,3 @@
 	suffix = .beta
 	suffix = -rc
 	suffix = .rc
-[color]
-    # Enable colors in color-supporting terminals
-[color "branch"]
-    # Blue on black is hard to read in git branch -vv: use cyan instead
-    upstream = cyan
-[grep]
-    break = true
-    heading = true
-    lineNumber = true
-	patternType = extended
-    # Consider most regexes to be ERE
-[credential]
-[credential "https://codeberg.org"]
-	provider = generic
-[rerere]
-	enabled = true
-[merge]
-	conflictStyle = zdiff3
-[alias]
-	aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
-	l = log --oneline --graph --decorate
-	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-	oops = commit --amend --no-edit
-	push-with-lease = push --force-with-lease
-	rebase-with-hooks = rebase -x 'git reset --soft HEAD~1 && git commit -C HEAD@{1}'
-	review-local = !git lg @{push}..
-	reword = commit --amend
-	uncommit = reset --soft HEAD~1
-	untrack = rm --cached --
-	contributors = shortlog --summary --numbered
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S\"$1\"; }; f"
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=\"$1\"; }; f"
-	merged = branch --merged
-[difftool "sourcetree"]
-	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $REMOTE
-[mergetool "sourcetree"]
-	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $BASE $REMOTE --auto-merge --output=$MERGED
-	trustExitCode = false
-	keepBackup = false
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	program = C:/Windows/System32/OpenSSH/ssh-keygen.exe
-[commit]
-	gpgSign = true
-[pager]
-	config = false
