@@ -25,8 +25,6 @@
 [diff]
 	mnemonicPrefix = true
 	submodule = log
-[difftool "sourcetree"]
-	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $REMOTE
 [fetch]
 	prune = true
 [gpg]
@@ -44,10 +42,6 @@
 	abbrevCommit = true
 [merge]
 	conflictStyle = zdiff3
-[mergetool "sourcetree"]
-	cmd = 'C:/Program Files/Meld/Meld.exe' $LOCAL $BASE $REMOTE --auto-merge --output=$MERGED
-	keepBackup = false
-	trustExitCode = false
 [pager]
 	config = false
 [pull]
