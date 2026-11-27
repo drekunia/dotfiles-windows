@@ -8,6 +8,10 @@ if (Get-Command zed -ErrorAction SilentlyContinue) {
     $env:VISUAL = $env:EDITOR
 }
 
+if (Test-Path "$env:ProgramFiles\Git\usr\bin\vim.exe") {
+    Set-Alias vim "$env:ProgramFiles\Git\usr\bin\vim.exe"
+}
+
 # ---------------------------------------------------------------------------------
 # PSReadLine
 # ---------------------------------------------------------------------------------
