@@ -1,0 +1,66 @@
+# --- macOS ---
+
+.DS_Store
+._*
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DocumentRevisions-V100
+.LSOverride
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.apdisk
+.com.apple.timemachine.donotpresent
+.fseventsd
+.localized
+Network Trash Folder
+Temporary Items
+
+# --- Windows ---
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*:Zone.Identifier
+
+# --- Linux ---
+
+.directory
+.Trash-*
+.fuse_hidden*
+
+# --- Vim / Neovim ---
+
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+*~
+.netrwhist
+
+# --- Visual Studio ---
+
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- JetBrains ---
+
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+
+# --- Git ---
+
+*.orig
+
+# --- Editor temporary files ---
+
+\#*\#
+.\#*
